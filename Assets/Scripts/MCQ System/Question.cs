@@ -9,7 +9,9 @@ public class Question : MonoBehaviour
     [SerializeField] private string question;
     [SerializeField] private string[] choices = new string[4];
     [SerializeField] [Range(0,3)] private int correctChoice;
+
     private bool m_Solved;
+    
 
     private void Start()
     {

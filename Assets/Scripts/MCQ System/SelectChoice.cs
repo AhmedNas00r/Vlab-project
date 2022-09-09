@@ -6,34 +6,34 @@ using UnityEngine.UI;
 
 public class SelectChoice : MonoBehaviour
 {
-    private Button m_Button;
+    private Button _button;
     
-    private Question m_Question;
-    private string m_Choice;
+    private Question _question;
+    private string _choice;
     private void Start()
     {
-        m_Button = GetComponent<Button>();
-        m_Button.onClick.AddListener(Select);
-        m_Question = GetComponentInParent(typeof(Question)) as Question; ;
+        _button = GetComponent<Button>();
+        _button.onClick.AddListener(Select);
+        _question = GetComponentInParent(typeof(Question)) as Question; ;
     }
     
 
     private void Select()
     {
-        if (m_Question.CheckAnswer(GetComponentInChildren<TextMeshProUGUI>().text))
+        if (_question.CheckAnswer(GetComponentInChildren<TextMeshProUGUI>().text))
         {
-            m_Button.image.color = Color.green;
+            _button.image.color = Color.green;
         }
         else
         {
-            m_Button.image.color = Color.red;   
+            _button.image.color = Color.red;   
         }  
         Invoke(nameof(NextQuestion), 0.3f);
     }
     
     private void NextQuestion()
     {
-        m_Button.image.color = Color.white;
-        m_Question.transform.parent.GetComponent<Questions>().NextQuestion(m_Question.gameObject);
+        _button.image.color = Color.white;
+        _question.transform.parent.GetComponent<Questions>().NextQuestion(_question.gameObject);
     }
 }

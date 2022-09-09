@@ -5,16 +5,17 @@ using UnityEngine;
 
 public class Questions : MonoBehaviour
 {
-    private bool m_AllSolved;
+    private bool _allSolved;
 
     private void Start()
     {
-        m_AllSolved = false;
+        _allSolved = false;
         // disable all the questions
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(false);
         }
+        //enable the first question
         transform.GetChild(0).gameObject.SetActive(true);
     }
     
@@ -22,8 +23,9 @@ public class Questions : MonoBehaviour
     {
         Debug.Log("Next Question");
         CheckIfAllSolved();
-        if (m_AllSolved)
+        if (_allSolved)
         {
+            // do something here when all questions are solved
             CloseQuestions();
             return;
         }
@@ -48,7 +50,7 @@ public class Questions : MonoBehaviour
         transform.parent.gameObject.SetActive(false);
     }
 
-    private void CheckIfAllSolved()
+    private bool CheckIfAllSolved()
     {
         //check that all questions are solved in children
         int childCount = transform.childCount;
@@ -56,10 +58,10 @@ public class Questions : MonoBehaviour
         {
             if (!transform.GetChild(i).GetComponent<Question>().IsSolved())
             {
-                return;
+                return false;
             }
         }
-        m_AllSolved = true;
-        return;
+        return _allSolved = true;
+        
     }
 }
