@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class FindWithTag : EditorWindow
   private bool allSelected = false;
 
   [MenuItem("Window/FearlessFox/Find With Tag")]
+  [Obsolete("Obsolete")]
   public static void FindGameObjecWithTag()
   {
     editorWindow = EditorWindow.GetWindow(typeof(FindWithTag));

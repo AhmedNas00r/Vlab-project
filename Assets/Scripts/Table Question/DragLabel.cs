@@ -34,6 +34,8 @@ public class DragLabel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         _canvasGroup.alpha = 1f;
         _canvasGroup.blocksRaycasts = true;
         Invoke(nameof(Reposition), 0.1f);
+        
+
     }
     
     
@@ -41,7 +43,8 @@ public class DragLabel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if (_dropped == false)
         {
-            transform.position = _initialPosition;            
+            transform.position = _initialPosition;      
+            transform.parent.parent.parent.parent.GetComponent<TableQuestion>().CheckAllAnswers();
         }
         else
         {
