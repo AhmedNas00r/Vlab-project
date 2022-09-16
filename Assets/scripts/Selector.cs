@@ -25,6 +25,7 @@ public class Selector : MonoBehaviour
                     lastColor = renderer.material.color;
                     isLastHit = true;
                     renderer.material.color = Color.red;
+                                        
                 }
             } else if (isLastHit) {
                 isLastHit = false;
