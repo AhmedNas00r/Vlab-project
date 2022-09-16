@@ -17,7 +17,6 @@ public class Selector : MonoBehaviour
     private void LookAtSelect() {
         RaycastHit hit;
         if (Physics.Raycast(FPCam.transform.position, FPCam.transform.forward, out hit)) {
-            Debug.Log(hit.transform.name);
             if (hit.transform.CompareTag("Select")) {
                 lastHit = hit;
                 MeshRenderer renderer = hit.transform.GetComponent<MeshRenderer>();
@@ -40,7 +39,8 @@ public class Selector : MonoBehaviour
         Debug.Log("Down");
         RaycastHit hit;
         if (Physics.Raycast(FPCam.transform.position, FPCam.transform.forward, out hit)) {
-            if (hit.transform.CompareTag("Select")) {
+            if (hit.transform.CompareTag("Select"))
+            {
                 // lastHit = hit;
                 // MeshRenderer renderer = hit.transform.GetComponent<MeshRenderer>();
                 // if (!isLastHit) {
@@ -49,6 +49,7 @@ public class Selector : MonoBehaviour
                 //     renderer.material.color = Color.black;
                 // } 
                 //TODO: Canvass set active   
+                EnableCanvas(hit);
             }
         }
             // } else if (isLastHit) {
@@ -56,6 +57,18 @@ public class Selector : MonoBehaviour
             //     MeshRenderer renderer = lastHit.transform.GetComponent<MeshRenderer>();
             //     renderer.material.color = lastColor;
             // }
+        }
+    }
+
+    private static void EnableCanvas(RaycastHit hit)
+    {
+        Debug.Log(hit.transform.name);
+        var hitObject = hit.transform.gameObject;
+        var questionCanvas = hitObject.transform.Find("Question Canvas");
+        var questions = questionCanvas.Find("Questions").GetComponent<Questions>();
+        if (!questions.GetAllSolved())
+        {
+            questionCanvas.gameObject.SetActive(true);
         }
     }
 }

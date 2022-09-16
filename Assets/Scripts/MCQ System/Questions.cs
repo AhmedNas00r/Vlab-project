@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Questions : MonoBehaviour
 {
+    UnityStandardAssets.Characters.FirstPerson.FirstPersonController _playercontroller;
     private bool _allSolved;
 
     private void Start()
@@ -17,8 +18,21 @@ public class Questions : MonoBehaviour
         }
         //enable the first question
         transform.GetChild(0).gameObject.SetActive(true);
+    
+        //unlock cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        //disable player movement
+        _playercontroller = GameObject.FindWithTag("Player")
+            .GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
+        _playercontroller.enabled = false;
+
     }
     
+    public bool GetAllSolved()
+    {
+        return _allSolved;
+    }
     public void NextQuestion(GameObject question)
     {
         Debug.Log("Next Question");
@@ -27,6 +41,13 @@ public class Questions : MonoBehaviour
         {
             // do something here when all questions are solved
             CloseQuestions();
+            // turn on device
+            transform.parent.parent.GetComponent<TurnOnDevices>().TurnOn();
+            
+            // call game manager to check if every questions in scene is solved
+            GameManager gameManager = GameObject.FindWithTag("Game Manager").GetComponent<GameManager>();
+            gameManager.CheckAllQuestions();
+            
             return;
         }
         int childCount = transform.childCount;
@@ -48,6 +69,13 @@ public class Questions : MonoBehaviour
     public void CloseQuestions()
     {
         transform.parent.gameObject.SetActive(false);
+        //enable movement
+        _playercontroller.enabled = true;
+        // lock cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        
+
     }
 
     private bool CheckIfAllSolved()
