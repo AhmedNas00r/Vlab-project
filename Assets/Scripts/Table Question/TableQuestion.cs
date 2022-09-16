@@ -151,7 +151,6 @@ public class TableQuestion : MonoBehaviour
         // check if there is an empty string
         if (formsListTextComponents[rowIndex].text == "" || sourcesListTextComponents[rowIndex].text == "")
         {
-            Debug.Log("empty");
             return false;
         }
         // check if the answer is correct
