@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/FearlessFox.meta
 guid: a6493218b35fddc44b2474b26acb4e76
+========
+guid: d5243cefa710dd0439670580dfcc5095
+>>>>>>>> new:Assets/Materials.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
