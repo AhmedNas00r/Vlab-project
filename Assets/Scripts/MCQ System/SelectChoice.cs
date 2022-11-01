@@ -9,7 +9,7 @@ public class SelectChoice : MonoBehaviour
     private Button _button;
     
     private Question _question;
-    private string _choice;
+
     private void Start()
     {
         _button = GetComponent<Button>();

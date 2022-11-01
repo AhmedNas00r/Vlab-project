@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Question : MonoBehaviour
 {
     [SerializeField] private string question;
-    [SerializeField] private string[] choices = new string[4];
-    [SerializeField] [Range(0,3)] private int correctChoice;
+    //create a list of 4 answers
+    [SerializeField] private List<string> choices;
+    [SerializeField] private int correctChoice;
 
     private bool m_Solved;
     
@@ -21,9 +23,12 @@ public class Question : MonoBehaviour
         //set choices text
         Transform choicesObject = transform.Find("Choices");
         Debug.Log(choicesObject.childCount);
-        for (int i = 0; i < choices.Length; i++)
+        for (int i = 0; i < choices.Count; i++)
         {
-            choicesObject.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = choices[i];
+            if (choicesObject.GetChild(i))
+            {
+                choicesObject.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = choices[i];
+            }
         }
     }
     

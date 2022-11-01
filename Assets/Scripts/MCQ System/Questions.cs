@@ -7,6 +7,7 @@ public class Questions : MonoBehaviour
 {
     UnityStandardAssets.Characters.FirstPerson.FirstPersonController _playercontroller;
     private bool _allSolved;
+    [SerializeField] private GameObject[] animationToPlay;
 
     private void Start()
     {
@@ -42,26 +43,41 @@ public class Questions : MonoBehaviour
             // do something here when all questions are solved
             CloseQuestions();
             // turn on device
-            transform.parent.parent.GetComponent<TurnOnDevices>().TurnOn();
-            
+            if(transform.parent?.parent?.GetComponent<TurnOnDevices>() != null)
+                transform.parent.parent.GetComponent<TurnOnDevices>().TurnOn();
+
             // call game manager to check if every questions in scene is solved
-            GameManager gameManager = GameObject.FindWithTag("Game Manager").GetComponent<GameManager>();
-            gameManager.CheckAllQuestions();
-            
+            // if (GameObject.FindWithTag("Game Manager"))
+            // {
+            //     GameManager gameManager = GameObject.FindWithTag("Game Manager").GetComponent<GameManager>();
+            //     gameManager.CheckAllQuestions();
+            // }
+
+            if (animationToPlay.Length > 0)
+            {
+                foreach (GameObject obj in animationToPlay)
+                {
+                    obj.BroadcastMessage("PlayAnimation");
+                }
+            }
+
             return;
         }
         int childCount = transform.childCount;
-        int index = question.transform.GetSiblingIndex();
-        Debug.Log("index: " + index);
-        for (int i = (index+1)%childCount; i < childCount; i = (i+1)%childCount)
+        if (childCount > 1)
         {
-            Debug.Log(i);
-            Transform sibling = transform.GetChild(i);
-            if (!sibling.GetComponent<Question>().IsSolved())
+            int index = question.transform.GetSiblingIndex();
+            Debug.Log("index: " + index);
+            for (int i = (index + 1) % childCount; i < childCount; i = (i + 1) % childCount)
             {
-                sibling.gameObject.SetActive(true);
-                question.SetActive(false);
-                return;
+                Debug.Log(i);
+                Transform sibling = transform.GetChild(i);
+                if (!sibling.GetComponent<Question>().IsSolved())
+                {
+                    sibling.gameObject.SetActive(true);
+                    question.SetActive(false);
+                    return;
+                }
             }
         }
     }
@@ -74,8 +90,6 @@ public class Questions : MonoBehaviour
         // lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        
-
     }
 
     private bool CheckIfAllSolved()
